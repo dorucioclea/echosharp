@@ -64,10 +64,9 @@ internal sealed class WebRtcVadSharpDetector : IVadDetector, IDisposable
 
             // Serialize the samples to the 16bit linear PCM buffer
 
-            var floatSpan = slice.Span;
-            for (var indexSample = 0; indexSample < floatSpan.Length; indexSample++)
+            for (var indexSample = 0; indexSample < slice.Span.Length; indexSample++)
             {
-                var sample = floatSpan[indexSample];
+                var sample = slice.Span[indexSample];
                 //convert (-1, 1) range int to short
                 var sixteenbit = (short)(sample * 32767);
                 BinaryPrimitives.WriteInt16LittleEndian(batch.AsSpan(indexSample * 2, 2), sixteenbit);

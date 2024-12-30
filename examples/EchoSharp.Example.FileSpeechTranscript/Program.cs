@@ -13,7 +13,7 @@
 //    - Audio Parsing:
 //            = Simple Wav with PCM streams parsed by EchoSharp (no extra component required)
 //            = EchoSharp.NAudio: mp3, ogg, wav, etc. parsed by NAudio:
-//         
+//
 //
 // Note: EchoSharp.Whisper.net, EchoSharp.Onnx.Whisper can be run locally without any cloud dependencies.
 
@@ -53,7 +53,7 @@ await foreach (var segment in transcriptor.TranscribeAsync(audioSource, Cancella
     Console.WriteLine($"{segment.StartTime}-{segment.StartTime + segment.Duration}:{segment.Text}");
 }
 
-ISpeechTranscriptorFactory GetSpeechTranscriptor(string type)
+ISpeechTranscriptorFactory  GetSpeechTranscriptor(string type)
 {
     // Uncomment to use other speech transcriptor component
     return type switch

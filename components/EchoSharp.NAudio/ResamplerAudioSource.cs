@@ -16,9 +16,9 @@ public sealed class ResamplerAudioSource : IAudioSource
     private readonly WdlResampler _resampler;
 
     // Current frame positions:
-    // - _currentFrameInResampledDomain is how many frames we've already *returned* to callers 
+    // - _currentFrameInResampledDomain is how many frames we've already *returned* to callers
     //   in terms of the new sample rate domain.
-    // - _currentFrameInSourceDomain is how many frames we've already consumed from _source 
+    // - _currentFrameInSourceDomain is how many frames we've already consumed from _source
     //   in terms of the original sample rate domain.
     private long _currentFrameInResampledDomain;
     private long _currentFrameInSourceDomain;
@@ -174,7 +174,7 @@ public sealed class ResamplerAudioSource : IAudioSource
 
                 totalOutputProduced += outputProducedThisPass;
 
-                // If we produced 0 frames but still requested input frames, 
+                // If we produced 0 frames but still requested input frames,
                 // then the source might be exhausted.
                 if (outputProducedThisPass == 0 && canRead == 0)
                 {
@@ -222,12 +222,10 @@ public sealed class ResamplerAudioSource : IAudioSource
     )
     {
         var framesMemory = await GetFramesAsync(startFrame, maxFrames, cancellationToken);
-        var framesSpan = framesMemory.Span;
-
-        var bytesToCopy = Math.Min(destination.Length, framesSpan.Length);
+        var bytesToCopy = Math.Min(destination.Length, framesMemory.Span.Length);
         if (bytesToCopy > 0)
         {
-            framesSpan.Slice(0, bytesToCopy).CopyTo(destination.Span);
+            framesMemory.Span.Slice(0, bytesToCopy).CopyTo(destination.Span);
 
             var bytesPerFrame = ChannelCount * (BitsPerSample / 8);
             return bytesToCopy / bytesPerFrame;
